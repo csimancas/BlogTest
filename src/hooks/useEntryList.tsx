@@ -53,6 +53,7 @@ const useEntryList = () => {
   ]);
 
   const [filteredData, setFilteredData] = useState<Entry[]>([]);
+  const [selectedEntry, setSelectedEntry] = useState<Entry>();
   const [searchText, setSearchText] = useState('');
 
   const searchItem = (text: string) => {
@@ -80,6 +81,8 @@ const useEntryList = () => {
     searchText,
     searchItem,
     filteredData,
+    selectedEntry,
+    setSelectedEntry,
   };
 };
 

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import useEntryList from '../hooks/useEntryList';
 import SearchBar from './SearchBar';
 import FloatingButton from './FloatingButton';
-import {randomColor} from '../utils';
+import DetailModal from './detailModal';
 
 interface contentType {
   title: string;
@@ -13,6 +13,7 @@ interface contentType {
   author: string;
   nameCharacter: string;
   color: string;
+  action: () => void;
 }
 
 const AvatarText = ({
@@ -31,7 +32,14 @@ const AvatarText = ({
   />
 );
 
-const Item = ({content, nameCharacter, author, date, color}: contentType) => (
+const Item = ({
+  content,
+  nameCharacter,
+  author,
+  date,
+  color,
+  action,
+}: contentType) => (
   <>
     <Card style={styles.item}>
       <Card.Title
@@ -44,25 +52,42 @@ const Item = ({content, nameCharacter, author, date, color}: contentType) => (
       </Card.Content>
 
       <Card.Actions>
-        <Button>Ver Detalle</Button>
+        <Button onPress={action}>Ver Detalle</Button>
       </Card.Actions>
     </Card>
   </>
 );
 
 const EntryList = () => {
-  const {entries, searchText, searchItem, filteredData} = useEntryList();
+  const {
+    entries,
+    searchText,
+    searchItem,
+    filteredData,
+    selectedEntry,
+    setSelectedEntry,
+  } = useEntryList();
+  const [visible, setVisible] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
         searchQuery={searchText}
         onChangeSearch={text => searchItem(text)}
       />
+      <DetailModal
+        visible={visible}
+        item={selectedEntry}
+        onClose={() => setVisible(false)}
+      />
       <FlatList
         data={searchText.length > 0 ? filteredData : entries}
         renderItem={({item}) => (
           <Item
-            color={randomColor()}
+            color={'pink'}
+            action={() => {
+              setVisible(true);
+              setSelectedEntry(item);
+            }}
             nameCharacter={item.author.substring(0, 1)}
             author={item.author}
             title={item.title}

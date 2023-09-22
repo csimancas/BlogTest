@@ -6,7 +6,7 @@ import {randomColor} from '../utils';
 const FloatingButton = () => {
   return (
     <TouchableOpacity
-      style={[styles.container, {backgroundColor: randomColor()}]}
+      style={[styles.container, {backgroundColor: 'blue'}]}
       onPress={() => console.log('ddasdads')}>
       <Icon name="plus" size={30} color="white" />
     </TouchableOpacity>
