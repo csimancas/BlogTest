@@ -1,13 +1,16 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {randomColor} from '../utils';
 
-const FloatingButton = () => {
+interface FloatingButtonProps {
+  action: () => void;
+}
+
+const FloatingButton = ({action}: FloatingButtonProps) => {
   return (
     <TouchableOpacity
       style={[styles.container, {backgroundColor: 'blue'}]}
-      onPress={() => console.log('ddasdads')}>
+      onPress={action}>
       <Icon name="plus" size={30} color="white" />
     </TouchableOpacity>
   );

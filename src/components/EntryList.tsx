@@ -4,7 +4,8 @@ import {Avatar, Button, Card, Text} from 'react-native-paper';
 import useEntryList from '../hooks/useEntryList';
 import SearchBar from './SearchBar';
 import FloatingButton from './FloatingButton';
-import DetailModal from './detailModal';
+import DetailModal from './DetailModal';
+import EntryForm from './EntryForm';
 
 interface contentType {
   title: string;
@@ -68,6 +69,8 @@ const EntryList = () => {
     setSelectedEntry,
   } = useEntryList();
   const [visible, setVisible] = useState(false);
+  const [visibleEntry, setVisibleEntry] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
@@ -78,6 +81,10 @@ const EntryList = () => {
         visible={visible}
         item={selectedEntry}
         onClose={() => setVisible(false)}
+      />
+      <EntryForm
+        visible={visibleEntry}
+        onClose={() => setVisibleEntry(false)}
       />
       <FlatList
         data={searchText.length > 0 ? filteredData : entries}
@@ -97,7 +104,7 @@ const EntryList = () => {
         )}
         keyExtractor={item => item.id.toString()}
       />
-      <FloatingButton />
+      <FloatingButton action={() => setVisibleEntry(true)} />
     </SafeAreaView>
   );
 };
