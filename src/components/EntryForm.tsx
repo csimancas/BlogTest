@@ -1,8 +1,9 @@
 import React from 'react';
 import {Modal, View, StyleSheet} from 'react-native';
 import {Text, TextInput, Button} from 'react-native-paper';
-
 import {Formik} from 'formik';
+
+import useEntryForm from '../hooks/useEntryForm';
 
 interface EntryFormProps {
   visible: boolean;
@@ -10,6 +11,7 @@ interface EntryFormProps {
 }
 
 const EntryForm = ({visible, onClose}: EntryFormProps) => {
+  const {createEntry} = useEntryForm();
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <View style={styles.container}>
@@ -24,8 +26,11 @@ const EntryForm = ({visible, onClose}: EntryFormProps) => {
               author: '',
               date: new Date().toLocaleString(),
             }}
-            onSubmit={values => console.log(values)}>
-            {({handleChange, handleBlur, handleSubmit, values}) => (
+            onSubmit={values => {
+              createEntry(values);
+              onClose();
+            }}>
+            {({handleChange, handleSubmit, values}) => (
               <View style={styles.inputsView}>
                 <TextInput
                   style={styles.input}
@@ -63,7 +68,9 @@ const EntryForm = ({visible, onClose}: EntryFormProps) => {
                   <Button
                     style={styles.styleButton}
                     mode="contained"
-                    onPress={() => console.log(values)}>
+                    onPress={() => {
+                      handleSubmit();
+                    }}>
                     Agregar entrada
                   </Button>
                 </View>
