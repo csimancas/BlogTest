@@ -4,15 +4,12 @@ import {Text, TextInput, Button} from 'react-native-paper';
 import {Formik} from 'formik';
 import {Context as EntriesContext} from '../context/entriesContext';
 
-import useEntryForm from '../hooks/useEntryForm';
-
 interface EntryFormProps {
   visible: boolean;
   onClose: () => void;
 }
 
 const EntryForm = ({visible, onClose}: EntryFormProps) => {
-  const {createEntry} = useEntryForm();
   const {addEntry} = useContext(EntriesContext);
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
@@ -30,7 +27,7 @@ const EntryForm = ({visible, onClose}: EntryFormProps) => {
                 date: new Date().toLocaleString(),
               }}
               onSubmit={values => {
-                addEntry(values);
+                addEntry(values.title, values.content, values.author);
                 onClose();
               }}>
               {({handleChange, handleSubmit, values}) => (
