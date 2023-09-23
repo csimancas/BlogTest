@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
-import axios from 'axios';
-import {GET_ENTRIES} from '../api';
+import {useEffect, useState, useContext} from 'react';
+import {Context as EntriesContext} from '../context/entriesContext';
 
 interface Entry {
   id: number;
@@ -11,17 +10,13 @@ interface Entry {
 }
 
 const useEntryList = () => {
-  const [entries, setEntries] = useState([]);
+  const {
+    state: {data, isLoaded},
+    getEntries,
+  } = useContext(EntriesContext);
 
   useEffect(() => {
-    axios
-      .get(GET_ENTRIES)
-      .then(response => {
-        setEntries(response.data.entries);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    getEntries();
   }, []);
 
   const [filteredData, setFilteredData] = useState<Entry[]>([]);
@@ -33,7 +28,7 @@ const useEntryList = () => {
 
     const query = searchText.toLowerCase();
 
-    const filterData = entries.filter(item => {
+    const filterData = data.filter(item => {
       const title = item.title.toLowerCase();
       const content = item.content.toLowerCase();
       const author = item.author.toLowerCase();
@@ -49,7 +44,8 @@ const useEntryList = () => {
   };
 
   return {
-    entries,
+    data,
+    isLoaded,
     searchText,
     searchItem,
     filteredData,

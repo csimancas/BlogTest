@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {ScrollView, Modal, View, StyleSheet} from 'react-native';
 import {Text, TextInput, Button} from 'react-native-paper';
 import {Formik} from 'formik';
+import {Context as EntriesContext} from '../context/entriesContext';
 
 import useEntryForm from '../hooks/useEntryForm';
 
@@ -12,6 +13,7 @@ interface EntryFormProps {
 
 const EntryForm = ({visible, onClose}: EntryFormProps) => {
   const {createEntry} = useEntryForm();
+  const {addEntry} = useContext(EntriesContext);
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
@@ -28,7 +30,7 @@ const EntryForm = ({visible, onClose}: EntryFormProps) => {
                 date: new Date().toLocaleString(),
               }}
               onSubmit={values => {
-                createEntry(values);
+                addEntry(values);
                 onClose();
               }}>
               {({handleChange, handleSubmit, values}) => (

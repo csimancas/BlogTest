@@ -48,7 +48,7 @@ const CardDetail = ({
   onClose,
 }: contentType) => (
   <>
-    <Card style={styles.item}>
+    <Card>
       <Card.Title
         title={author}
         subtitle={date}
@@ -65,9 +65,6 @@ const CardDetail = ({
 const DetailModal = ({item, visible, onClose}: ContentType) => {
   return (
     <Modal
-      style={{
-        width: '100%',
-      }}
       animationType="slide"
       visible={visible}
       onRequestClose={onClose}
@@ -91,7 +88,6 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     paddingHorizontal: 10,
   },
   modalView: {

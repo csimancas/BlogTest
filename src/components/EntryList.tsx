@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Avatar, Button, Card, Text} from 'react-native-paper';
 import useEntryList from '../hooks/useEntryList';
-import SearchBar from './SearchBar';
-import FloatingButton from './FloatingButton';
 import DetailModal from './DetailModal';
 import EntryForm from './EntryForm';
+import FloatingButton from './FloatingButton';
+import SearchBar from './SearchBar';
 
 interface contentType {
   title: string;
@@ -35,33 +35,36 @@ const AvatarText = ({
 
 const Item = ({
   content,
+  title,
   nameCharacter,
   author,
   date,
   color,
   action,
 }: contentType) => (
-  <>
-    <Card style={styles.item}>
+  <View style={styles.item}>
+    <Card>
       <Card.Title
         title={author}
         subtitle={date}
         left={() => <AvatarText nameCharacter={nameCharacter} color={color} />}
       />
       <Card.Content>
+        <Text variant="bodyMedium" style={styles.title}>
+          {title}
+        </Text>
         <Text variant="bodyMedium">{content}</Text>
       </Card.Content>
-
       <Card.Actions>
         <Button onPress={action}>Ver Detalle</Button>
       </Card.Actions>
     </Card>
-  </>
+  </View>
 );
 
 const EntryList = () => {
   const {
-    entries,
+    data,
     searchText,
     searchItem,
     filteredData,
@@ -88,8 +91,7 @@ const EntryList = () => {
         onClose={() => setVisibleEntry(false)}
       />
       <FlatList
-        // data={searchText.length > 0 ? filteredData : entries}
-        data={entries}
+        data={searchText.length > 0 ? filteredData : data}
         renderItem={({item}) => (
           <Item
             color={'pink'}
@@ -104,7 +106,7 @@ const EntryList = () => {
             content={item.content.substring(0, 70)}
           />
         )}
-        keyExtractor={item => item._id.toString()}
+        keyExtractor={item => item._id}
       />
       <FloatingButton action={() => setVisibleEntry(true)} />
     </SafeAreaView>
@@ -117,9 +119,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
-    flex: 1,
     marginTop: 10,
-    flexDirection: 'row',
+  },
+  title: {
+    fontWeight: 'bold',
   },
 });
 
