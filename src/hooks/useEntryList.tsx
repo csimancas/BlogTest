@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+import {GET_ENTRIES} from '../api';
 
 interface Entry {
   id: number;
@@ -9,48 +11,18 @@ interface Entry {
 }
 
 const useEntryList = () => {
-  const [entries, setEntries] = useState([
-    {
-      id: 1,
-      title: 'Hello World',
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      date: new Date().toLocaleDateString(),
-      author: 'Jose luis',
-    },
-    {
-      id: 2,
-      title: 'Hello World',
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      date: new Date().toLocaleDateString(),
-      author: 'Ricardo Penilla',
-    },
-    {
-      id: 3,
-      title: 'Hello World',
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      date: new Date().toLocaleDateString(),
-      author: 'Dulce Rojas',
-    },
-    {
-      id: 4,
-      title: 'Hello World',
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      date: new Date().toLocaleDateString(),
-      author: 'Pedro Picapiedra',
-    },
-    {
-      id: 5,
-      title: 'Hello World',
-      content:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      date: new Date().toLocaleDateString(),
-      author: 'Pablo Marmol',
-    },
-  ]);
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(GET_ENTRIES)
+      .then(response => {
+        setEntries(response.data.entries);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   const [filteredData, setFilteredData] = useState<Entry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<Entry>();

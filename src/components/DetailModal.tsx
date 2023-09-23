@@ -65,10 +65,13 @@ const CardDetail = ({
 const DetailModal = ({item, visible, onClose}: ContentType) => {
   return (
     <Modal
+      style={{
+        width: '100%',
+      }}
       animationType="slide"
       visible={visible}
       onRequestClose={onClose}
-      transparent={true}>
+      transparent={false}>
       <View style={styles.centeredView}>
         <CardDetail
           author={item?.author}
@@ -89,14 +92,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 10,
   },
   modalView: {
     height: 300,
-    width: 300,
+    width: '100%',
   },
   item: {
-    flex: 1,
-    marginTop: 10,
+    paddingHorizontal: 10,
+    width: '100%',
     flexDirection: 'row',
   },
 });

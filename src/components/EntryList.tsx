@@ -68,6 +68,7 @@ const EntryList = () => {
     selectedEntry,
     setSelectedEntry,
   } = useEntryList();
+
   const [visible, setVisible] = useState(false);
   const [visibleEntry, setVisibleEntry] = useState(false);
 
@@ -87,7 +88,8 @@ const EntryList = () => {
         onClose={() => setVisibleEntry(false)}
       />
       <FlatList
-        data={searchText.length > 0 ? filteredData : entries}
+        // data={searchText.length > 0 ? filteredData : entries}
+        data={entries}
         renderItem={({item}) => (
           <Item
             color={'pink'}
@@ -102,7 +104,7 @@ const EntryList = () => {
             content={item.content.substring(0, 70)}
           />
         )}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item._id.toString()}
       />
       <FloatingButton action={() => setVisibleEntry(true)} />
     </SafeAreaView>

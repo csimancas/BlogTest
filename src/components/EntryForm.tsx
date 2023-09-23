@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, View, StyleSheet} from 'react-native';
+import {ScrollView, Modal, View, StyleSheet} from 'react-native';
 import {Text, TextInput, Button} from 'react-native-paper';
 import {Formik} from 'formik';
 
@@ -14,71 +14,73 @@ const EntryForm = ({visible, onClose}: EntryFormProps) => {
   const {createEntry} = useEntryForm();
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <View style={styles.container}>
-        <Text variant="displaySmall" style={styles.header}>
-          Agrega una nueva entrada en el blog.
-        </Text>
-        <View>
-          <Formik
-            initialValues={{
-              title: '',
-              content: '',
-              author: '',
-              date: new Date().toLocaleString(),
-            }}
-            onSubmit={values => {
-              createEntry(values);
-              onClose();
-            }}>
-            {({handleChange, handleSubmit, values}) => (
-              <View style={styles.inputsView}>
-                <TextInput
-                  style={styles.input}
-                  label="Titulo"
-                  value={values.title}
-                  onChangeText={handleChange('title')}
-                />
-                <TextInput
-                  label="Contenido"
-                  style={styles.input}
-                  multiline={true}
-                  value={values.content}
-                  onChangeText={handleChange('content')}
-                />
-                <TextInput
-                  label="Autor"
-                  style={styles.input}
-                  value={values.author}
-                  onChangeText={handleChange('author')}
-                />
-                <TextInput
-                  style={styles.input}
-                  label="Fecha"
-                  value={new Date().toLocaleString()}
-                  disabled={true}
-                />
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
+        <View style={styles.container}>
+          <Text variant="displaySmall" style={styles.header}>
+            Agrega una nueva entrada en el blog.
+          </Text>
+          <View>
+            <Formik
+              initialValues={{
+                title: '',
+                content: '',
+                author: '',
+                date: new Date().toLocaleString(),
+              }}
+              onSubmit={values => {
+                createEntry(values);
+                onClose();
+              }}>
+              {({handleChange, handleSubmit, values}) => (
+                <View style={styles.inputsView}>
+                  <TextInput
+                    style={styles.input}
+                    label="Titulo"
+                    value={values.title}
+                    onChangeText={handleChange('title')}
+                  />
+                  <TextInput
+                    label="Contenido"
+                    style={styles.input}
+                    multiline={true}
+                    value={values.content}
+                    onChangeText={handleChange('content')}
+                  />
+                  <TextInput
+                    label="Autor"
+                    style={styles.input}
+                    value={values.author}
+                    onChangeText={handleChange('author')}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    label="Fecha"
+                    value={new Date().toLocaleString()}
+                    disabled={true}
+                  />
 
-                <View style={styles.buttons}>
-                  <Button
-                    style={styles.styleButton}
-                    mode="contained"
-                    onPress={() => onClose()}>
-                    Regresar
-                  </Button>
-                  <Button
-                    style={styles.styleButton}
-                    mode="contained"
-                    onPress={() => {
-                      handleSubmit();
-                    }}>
-                    Agregar entrada
-                  </Button>
+                  <View style={styles.buttons}>
+                    <Button
+                      style={styles.styleButton}
+                      mode="contained"
+                      onPress={() => onClose()}>
+                      Regresar
+                    </Button>
+                    <Button
+                      style={styles.styleButton}
+                      mode="contained"
+                      onPress={() => {
+                        handleSubmit();
+                      }}>
+                      Agregar entrada
+                    </Button>
+                  </View>
                 </View>
-              </View>
-            )}
-          </Formik>
+              )}
+            </Formik>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   );
 };
