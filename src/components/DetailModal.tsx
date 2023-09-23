@@ -45,17 +45,21 @@ const CardDetail = ({
   author,
   date,
   color,
+  title,
   onClose,
 }: contentType) => (
   <>
     <Card>
       <Card.Title
         title={author}
-        subtitle={date}
+        subtitle={new Date(date).toLocaleDateString()}
         left={() => <AvatarText nameCharacter={nameCharacter} color={color} />}
         right={() => <Button onPress={onClose}>Regresar</Button>}
       />
       <Card.Content>
+        <Text variant="bodyMedium" style={styles.title}>
+          {title}
+        </Text>
         <Text variant="bodyMedium">{content}</Text>
       </Card.Content>
     </Card>
@@ -98,6 +102,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
     flexDirection: 'row',
+  },
+  title: {
+    fontWeight: 'bold',
   },
 });
 

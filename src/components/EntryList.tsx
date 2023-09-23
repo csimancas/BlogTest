@@ -46,7 +46,7 @@ const Item = ({
     <Card>
       <Card.Title
         title={author}
-        subtitle={date}
+        subtitle={new Date(date).toLocaleDateString()}
         left={() => <AvatarText nameCharacter={nameCharacter} color={color} />}
       />
       <Card.Content>
