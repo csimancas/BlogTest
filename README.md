@@ -20,6 +20,8 @@ Sigue estos pasos para instalar y configurar la aplicación:
    cd BlogTest
 3. Hacemos un yarn o npm install para instalar las dependencias del proyecto.
    npm install || yarn
+4. Para correr el proyecto en macos y linux:
+   - npm start && npm run android || yarn start && yarn android
 
 ** Nota **
 
